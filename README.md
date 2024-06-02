@@ -1,5 +1,5 @@
 # Build from Source
-``` bash
+``` shell
 git clone https://github.com/frame-dev/SimpleJavaUtils
 cd SimpleJavaUtils
 mvn clean package

@@ -1,4 +1,5 @@
 # Build from Source
+```git and maven are required```
 ``` shell
 git clone https://github.com/frame-dev/SimpleJavaUtils
 cd SimpleJavaUtils

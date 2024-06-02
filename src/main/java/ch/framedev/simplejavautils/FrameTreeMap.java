@@ -24,4 +24,9 @@ public class FrameTreeMap<K, V> extends TreeMap<K, V> implements Serializable {
                     return map.getKey();
         return null;
     }
+
+    public FrameTreeMap<K, V> putHash(K key, V value) {
+        super.put(key, value);
+        return this;
+    }
 }

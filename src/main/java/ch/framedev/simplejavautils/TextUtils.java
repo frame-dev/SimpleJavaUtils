@@ -1,5 +1,6 @@
 package ch.framedev.simplejavautils;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -58,6 +59,24 @@ public class TextUtils extends Converter {
 
     public Byte[] byteListToArray(List<Byte> list) {
         return list.toArray(new Byte[0]);
+    }
+
+    public Object[] objectListToArray(List<Object> list) {
+        return list.toArray(new Object[0]);
+    }
+
+
+    /**
+     * Converts a list to an array.
+     * Suppressed (unchecked)
+     * @param list the list to be converted
+     * @param <T>  the type of elements in the list
+     * @return an array containing the elements of the list
+     */
+    public static <T> T[] listToArray(List<T> list, Class<T> clazz) {
+        @SuppressWarnings("unchecked")
+        T[] array = (T[]) Array.newInstance(clazz, list.size());
+        return list.toArray(array);
     }
 
     public int doubleToInt(double d) {

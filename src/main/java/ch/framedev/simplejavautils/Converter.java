@@ -30,6 +30,12 @@ abstract class Converter {
         }
     }
 
+    /**
+     * Checks if the given string can be parsed into a short integer.
+     *
+     * @param number The string to be parsed.
+     * @return True if the string can be parsed into a short integer, false otherwise.
+     */
     public boolean isShort(String number) {
         try {
             Short.parseShort(number);

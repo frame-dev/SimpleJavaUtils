@@ -16,10 +16,14 @@ public class Settings {
     public Settings(File file) {
         this.file = file;
         if(!file.exists()) {
-            if(!file.getParentFile().exists() && file.getParentFile() != null)
-                file.getParentFile().mkdir();
+            if(file.getParentFile() != null && !file.getParentFile().exists())
+                if(!file.getParentFile().mkdir()) {
+                    throw new IllegalStateException("Could not create directory : " + file.getParentFile().getAbsolutePath());
+                }
             try {
-                file.createNewFile();
+                if(file.createNewFile()) {
+                    throw new IllegalStateException("Could not create new File : " + file.getAbsolutePath());
+                }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -36,10 +40,14 @@ public class Settings {
         this.clazz = clazz;
         this.file = file;
         if(!file.exists()) {
-            if(!file.getParentFile().exists() && file.getParentFile() != null)
-                file.getParentFile().mkdir();
+            if(file.getParentFile() != null && !file.getParentFile().exists())
+                if(!file.getParentFile().mkdir()) {
+                    throw new IllegalStateException("Could not create directory : " + file.getParentFile().getAbsolutePath());
+                }
             try {
-                file.createNewFile();
+                if(file.createNewFile()) {
+                    throw new IllegalStateException("Could not create new File : " + file.getAbsolutePath());
+                }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

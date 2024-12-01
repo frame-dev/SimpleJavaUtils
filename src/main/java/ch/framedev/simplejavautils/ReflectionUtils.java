@@ -1,10 +1,13 @@
 package ch.framedev.simplejavautils;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Level;
 
 /**
  * / This Plugin was Created by FrameDev
@@ -17,6 +20,8 @@ import java.util.logging.Level;
 
 @SuppressWarnings({"SpellCheckingInspection","unused"})
 public class ReflectionUtils {
+
+    private final Logger logger = LogManager.getLogger(ReflectionUtils.class);
 
     private boolean accessible = false;
 
@@ -41,7 +46,7 @@ public class ReflectionUtils {
         try {
             cls = Class.forName(className);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         assert cls != null;
         for (Object obj : cls.getEnumConstants()) {
@@ -50,7 +55,7 @@ public class ReflectionUtils {
                 m.setAccessible(accessible);
                 return m.invoke(obj, of);
             } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException ex) {
-                ex.printStackTrace();
+                logger.log(Level.ERROR, ex);
             }
         }
         return null;
@@ -61,7 +66,7 @@ public class ReflectionUtils {
         try {
             cls = Class.forName(className);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         assert cls != null;
         if (cls.isEnum()) {
@@ -75,7 +80,7 @@ public class ReflectionUtils {
         try {
             cls = Class.forName(className);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         try {
             assert cls != null;
@@ -86,7 +91,7 @@ public class ReflectionUtils {
                 }
             }
         } catch (SecurityException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         return null;
     }
@@ -96,7 +101,7 @@ public class ReflectionUtils {
         try {
             cls = Class.forName(className);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         try {
             assert cls != null;
@@ -107,7 +112,7 @@ public class ReflectionUtils {
                 }
             }
         } catch (SecurityException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         return null;
     }
@@ -122,14 +127,14 @@ public class ReflectionUtils {
         try {
             cls = Class.forName(className);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
 
         try {
             assert cls != null;
             return cls.getDeclaredAnnotation(class__) != null;
         } catch (SecurityException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         return false;
     }
@@ -139,24 +144,23 @@ public class ReflectionUtils {
         try {
             cls = Class.forName(className);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
 
         try {
             assert cls != null;
             return cls.getSuperclass().getDeclaredAnnotation(class__) != null;
         } catch (SecurityException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         return false;
     }
-
     public boolean hasFieldAnnotation(String className, String fieldName, Class<? extends Annotation> class__) {
         Class<?> cls = null;
         try {
             cls = Class.forName(className);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         try {
             assert cls != null;
@@ -167,17 +171,18 @@ public class ReflectionUtils {
                 }
             }
         } catch (SecurityException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         return false;
     }
+
 
     public boolean hasFieldAnnotationSuperClass(String className, String fieldName, Class<? extends Annotation> class__) {
         Class<?> cls = null;
         try {
             cls = Class.forName(className);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         try {
             assert cls != null;
@@ -188,7 +193,7 @@ public class ReflectionUtils {
                 }
             }
         } catch (SecurityException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         return false;
     }
@@ -198,7 +203,7 @@ public class ReflectionUtils {
         try {
             cls = Class.forName(className);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         try {
             assert cls != null;
@@ -209,7 +214,7 @@ public class ReflectionUtils {
                 }
             }
         } catch (SecurityException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         return null;
     }
@@ -219,7 +224,7 @@ public class ReflectionUtils {
         try {
             cls = Class.forName(className);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         try {
             assert cls != null;
@@ -230,7 +235,7 @@ public class ReflectionUtils {
                 }
             }
         } catch (SecurityException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         return null;
     }
@@ -240,7 +245,7 @@ public class ReflectionUtils {
         try {
             cls = Class.forName(className);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         try {
             assert cls != null;
@@ -251,7 +256,7 @@ public class ReflectionUtils {
                 }
             }
         } catch (SecurityException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         return null;
     }
@@ -261,7 +266,7 @@ public class ReflectionUtils {
         try {
             cls = Class.forName(className);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         try {
             assert cls != null;
@@ -272,7 +277,7 @@ public class ReflectionUtils {
                 }
             }
         } catch (SecurityException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         return null;
     }
@@ -282,7 +287,7 @@ public class ReflectionUtils {
         try {
             cls = Class.forName(className);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         try {
             assert cls != null;
@@ -293,7 +298,7 @@ public class ReflectionUtils {
                 }
             }
         } catch (SecurityException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         return false;
     }
@@ -303,7 +308,7 @@ public class ReflectionUtils {
         try {
             cls = Class.forName(className);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         try {
             assert cls != null;
@@ -314,7 +319,7 @@ public class ReflectionUtils {
                 }
             }
         } catch (SecurityException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         return false;
     }
@@ -324,7 +329,7 @@ public class ReflectionUtils {
         try {
             cls = Class.forName(className);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         try {
             assert cls != null;
@@ -335,7 +340,7 @@ public class ReflectionUtils {
                 }
             }
         } catch (SecurityException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         return null;
     }
@@ -345,7 +350,7 @@ public class ReflectionUtils {
         try {
             cls = Class.forName(className);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         try {
             assert cls != null;
@@ -356,7 +361,7 @@ public class ReflectionUtils {
                 }
             }
         } catch (SecurityException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         return null;
     }
@@ -366,7 +371,7 @@ public class ReflectionUtils {
         try {
             cls = Class.forName(className);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         try {
             assert cls != null;
@@ -377,7 +382,7 @@ public class ReflectionUtils {
                 }
             }
         } catch (SecurityException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         return null;
     }
@@ -387,7 +392,7 @@ public class ReflectionUtils {
         try {
             cls = Class.forName(className);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         try {
             assert cls != null;
@@ -398,7 +403,7 @@ public class ReflectionUtils {
                 }
             }
         } catch (SecurityException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         return null;
     }
@@ -408,7 +413,7 @@ public class ReflectionUtils {
         try {
             cls = Class.forName(className);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         try {
             assert cls != null;
@@ -419,7 +424,7 @@ public class ReflectionUtils {
                 }
             }
         } catch (SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         return null;
     }
@@ -430,7 +435,7 @@ public class ReflectionUtils {
         try {
             cls = Class.forName(className);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         try {
             assert cls != null;
@@ -441,7 +446,7 @@ public class ReflectionUtils {
                 }
             }
         } catch (SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         return null;
     }
@@ -451,7 +456,7 @@ public class ReflectionUtils {
         try {
             cls = Class.forName(className);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         try {
             assert cls != null;
@@ -462,7 +467,7 @@ public class ReflectionUtils {
                 }
             }
         } catch (SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         return null;
     }
@@ -472,7 +477,7 @@ public class ReflectionUtils {
         try {
             cls = Class.forName(className);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         try {
             assert cls != null;
@@ -483,7 +488,7 @@ public class ReflectionUtils {
                 }
             }
         } catch (SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         return null;
     }
@@ -493,7 +498,7 @@ public class ReflectionUtils {
         try {
             cls = Class.forName(className);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         try {
             assert cls != null;
@@ -504,7 +509,7 @@ public class ReflectionUtils {
                 }
             }
         } catch (SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         return true;
     }
@@ -514,7 +519,7 @@ public class ReflectionUtils {
         try {
             cls = Class.forName(className);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         try {
             assert cls != null;
@@ -525,7 +530,7 @@ public class ReflectionUtils {
                 }
             }
         } catch (SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         return true;
     }
@@ -535,7 +540,7 @@ public class ReflectionUtils {
         try {
             cls = Class.forName(className);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         try {
             assert cls != null;
@@ -546,7 +551,7 @@ public class ReflectionUtils {
                 }
             }
         } catch (SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         return true;
     }
@@ -556,7 +561,7 @@ public class ReflectionUtils {
         try {
             cls = Class.forName(className);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         try {
             assert cls != null;
@@ -567,7 +572,7 @@ public class ReflectionUtils {
                 }
             }
         } catch (SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         return true;
     }
@@ -577,7 +582,7 @@ public class ReflectionUtils {
         try {
             cls = Class.forName(className);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         try {
             assert cls != null;
@@ -588,7 +593,7 @@ public class ReflectionUtils {
                 }
             }
         } catch (SecurityException | IllegalArgumentException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         return false;
     }
@@ -598,7 +603,7 @@ public class ReflectionUtils {
         try {
             cls = Class.forName(className);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         try {
             assert cls != null;
@@ -609,7 +614,7 @@ public class ReflectionUtils {
                 }
             }
         } catch (SecurityException | IllegalArgumentException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         return false;
     }
@@ -617,42 +622,42 @@ public class ReflectionUtils {
     public void setField(String className, Object object, String fieldName, Object data) {
         Field field = getField(className, fieldName);
         if (field == null) {
-            new SimpleJavaUtils().getLogger().log(Level.SEVERE, "No Field Found!");
+            logger.log(Level.ERROR, String.format("No Field found for class %s", className));
             return;
         }
         try {
             field.setAccessible(true);
             field.set(object, data);
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
     }
 
     public void setFieldSuperClass(String className, Object object, String fieldName, Object data) {
         Field field = getFieldSuperClass(className, fieldName);
         if (field == null) {
-            new SimpleJavaUtils().getLogger().log(Level.SEVERE, "No Field Found!");
+            logger.log(Level.ERROR, String.format("No Field found for class %s", className));
             return;
         }
         try {
             field.setAccessible(true);
             field.set(object, data);
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
     }
 
     public Object getFieldValue(String className, Object object, String fieldName) {
         Field field = getField(className, fieldName);
         if (field == null) {
-            new SimpleJavaUtils().getLogger().log(Level.SEVERE, "No Field Found!");
+            logger.log(Level.ERROR, String.format("No Field found for class %s", className));
             return null;
         }
         try {
             field.setAccessible(true);
             return field.get(object);
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         return null;
     }
@@ -660,14 +665,14 @@ public class ReflectionUtils {
     public Object getFieldValueSuperClass(String className, Object object, String fieldName) {
         Field field = getFieldSuperClass(className, fieldName);
         if (field == null) {
-            new SimpleJavaUtils().getLogger().log(Level.SEVERE, "No Field Found!");
+            logger.log(Level.ERROR, String.format("No Field found for class %s", className));
             return null;
         }
         try {
             field.setAccessible(true);
             return field.get(object);
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         return null;
     }
@@ -675,7 +680,7 @@ public class ReflectionUtils {
     public Type getFieldType(String className, String fieldName) {
         Field field = getField(className, fieldName);
         if (field == null) {
-            new SimpleJavaUtils().getLogger().log(Level.SEVERE, "No Field Found!");
+            logger.log(Level.ERROR, String.format("No Field found for class %s", className));
             return null;
         }
         field.setAccessible(true);
@@ -685,7 +690,7 @@ public class ReflectionUtils {
     public Type getFieldTypeSuperClass(String className, String fieldName) {
         Field field = getFieldSuperClass(className, fieldName);
         if (field == null) {
-            new SimpleJavaUtils().getLogger().log(Level.SEVERE, "No Field Found!");
+            logger.log(Level.ERROR, String.format("No Field found for class %s", className));
             return null;
         }
         field.setAccessible(true);
@@ -701,7 +706,7 @@ public class ReflectionUtils {
             constructor.setAccessible(accessible);
             object = constructor.newInstance(objs);
         } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         return object;
     }
@@ -714,7 +719,7 @@ public class ReflectionUtils {
             Constructor<?> constructor = cls.getDeclaredConstructor(params);
             object = constructor.newInstance(objs);
         } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         return object;
     }
@@ -726,7 +731,7 @@ public class ReflectionUtils {
             Constructor<?> constructor = cls.getDeclaredConstructor();
             object = constructor.newInstance();
         } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         return object;
     }
@@ -737,7 +742,7 @@ public class ReflectionUtils {
             Class<?> cls = Class.forName(className);
             object = cls.getDeclaredConstructors();
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         return object;
     }
@@ -748,7 +753,7 @@ public class ReflectionUtils {
             Class<?> cls = Class.forName(className);
             object = cls.getDeclaredConstructor(params);
         } catch (ClassNotFoundException | NoSuchMethodException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         return object;
     }
@@ -759,7 +764,7 @@ public class ReflectionUtils {
             Class<?> cls = Class.forName(className);
             object = cls.getDeclaredConstructor();
         } catch (ClassNotFoundException | NoSuchMethodException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e);
         }
         return object;
     }
@@ -769,8 +774,9 @@ public class ReflectionUtils {
             Class<?> cls = Class.forName(className);
             return cls.getFields();
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.ERROR, e);
         }
+        return null;
     }
 
     public Field[] getFieldsSuperClass(String className) {
@@ -778,7 +784,8 @@ public class ReflectionUtils {
             Class<?> cls = Class.forName(className);
             return cls.getSuperclass().getFields();
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.ERROR, e);
         }
+        return null;
     }
 }

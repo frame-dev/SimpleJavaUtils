@@ -7,7 +7,7 @@
 
     <groupId>ch.framedev</groupId>
     <artifactId>SimpleJavaUtils</artifactId>
-    <version>1.0.8-RELEASE</version>
+    <version>1.1.2-RELEASE</version>
 
     <licenses>
         <license>
@@ -31,6 +31,24 @@
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
             <version>24.0.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>3.0.0-beta1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>3.0.0-beta1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

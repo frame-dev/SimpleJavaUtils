@@ -10,10 +10,12 @@ import java.nio.file.FileStore;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * / This Plugin was Created by FrameDev
- * / Package : de.framedev.javautils
+ * / Package : ch.framedev.simplejavautils
  * / ClassName SystemUtils
  * / Date: 16.07.21
  * / Project: JavaUtils
@@ -22,12 +24,72 @@ import java.nio.file.Path;
 
 public class SystemUtils {
 
+    public enum JavaVersion {
+        VERSION_1_7,
+        VERSION_1_8,
+        VERSION_1_9,
+        VERSION_10,
+        VERSION_11,
+        VERSION_12,
+        VERSION_13,
+        VERSION_14,
+        VERSION_15,
+        VERSION_16,
+        VERSION_17,
+        VERSION_18,
+        VERSION_19,
+        VERSION_20,
+        VERSION_21,
+        VERSION_22,
+        VERSION_23;
+    }
+
+    public static class JavaVersionMapper {
+        private static final Map<String, JavaVersion> JAVA_VERSION_MAP = new HashMap<>();
+
+        static {
+            JAVA_VERSION_MAP.put("1.8", JavaVersion.VERSION_1_8);
+            JAVA_VERSION_MAP.put("1.9", JavaVersion.VERSION_1_9);
+            JAVA_VERSION_MAP.put("10", JavaVersion.VERSION_10);
+            JAVA_VERSION_MAP.put("11", JavaVersion.VERSION_11);
+            JAVA_VERSION_MAP.put("12", JavaVersion.VERSION_12);
+            JAVA_VERSION_MAP.put("13", JavaVersion.VERSION_13);
+            JAVA_VERSION_MAP.put("14", JavaVersion.VERSION_14);
+            JAVA_VERSION_MAP.put("15", JavaVersion.VERSION_15);
+            JAVA_VERSION_MAP.put("16", JavaVersion.VERSION_16);
+            JAVA_VERSION_MAP.put("17", JavaVersion.VERSION_17);
+            JAVA_VERSION_MAP.put("18", JavaVersion.VERSION_18);
+            JAVA_VERSION_MAP.put("19", JavaVersion.VERSION_19);
+            JAVA_VERSION_MAP.put("20", JavaVersion.VERSION_20);
+            JAVA_VERSION_MAP.put("21", JavaVersion.VERSION_21);
+            JAVA_VERSION_MAP.put("22", JavaVersion.VERSION_22);
+            JAVA_VERSION_MAP.put("23", JavaVersion.VERSION_23);
+        }
+
+        public static JavaVersion getJavaVersion() {
+            String version = System.getProperty("java.version");
+            String majorVersion = extractMajorVersion(version);
+            return JAVA_VERSION_MAP.getOrDefault(majorVersion, JavaVersion.VERSION_1_7);
+        }
+
+        private static String extractMajorVersion(String version) {
+            // Split the version string by dots and return the first segment
+            String[] parts = version.split("\\.");
+            if (parts[0].equals("1")) { // Handle legacy versions like "1.8"
+                return parts[1];
+            }
+            return parts[0]; // Modern versions like "23.0.3"
+        }
+    }
+
+
     public enum OSType {
         WINDOWS, MACOS, LINUX, OTHER;
     }
 
     /**
      * Return the OsType from the Operating System
+     *
      * @return Return the OsType from the Operating System
      */
     public OSType getOSType() {
@@ -78,6 +140,7 @@ public class SystemUtils {
 
     /**
      * This Method returns the LocalAddress
+     *
      * @return return the LocalAddress
      */
     public String getLocalAddress() {
@@ -93,6 +156,7 @@ public class SystemUtils {
 
     /**
      * This Method returns the Local Hostname
+     *
      * @return return the Local Hostname
      */
     public String getLocalHostName() {

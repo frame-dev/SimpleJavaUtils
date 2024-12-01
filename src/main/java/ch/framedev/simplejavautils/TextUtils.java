@@ -73,7 +73,7 @@ public class TextUtils extends Converter {
      * @param <T>  the type of elements in the list
      * @return an array containing the elements of the list
      */
-    public static <T> T[] listToArray(List<T> list, Class<T> clazz) {
+    public <T> T[] listToArray(List<T> list, Class<T> clazz) {
         @SuppressWarnings("unchecked")
         T[] array = (T[]) Array.newInstance(clazz, list.size());
         return list.toArray(array);

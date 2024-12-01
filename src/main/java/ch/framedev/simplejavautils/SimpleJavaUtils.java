@@ -601,4 +601,79 @@ public class SimpleJavaUtils {
         }
     }
 
+    public byte[] encodeFileToBase64BinaryArray(File file) {
+        byte[] encodedfile = null;
+        try {
+            byte[] bytes;
+            try (FileInputStream fileInputStreamReader = new FileInputStream(file)) {
+                bytes = new byte[(int) file.length()];
+                fileInputStreamReader.read(bytes);
+                encodedfile = Base64.getEncoder().encode(bytes);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (encodedfile != null) {
+            return encodedfile;
+        }
+        return null;
+    }
+
+    public File decodeFileFromBase64Binary(byte[] decodedFile, String extension, String fileName, String location) {
+
+        // Construct the file path
+        File newFileName = null;
+        try {
+            if (extension == null) {
+                newFileName = new File(location, fileName);
+            } else {
+                newFileName = File.createTempFile(location, fileName + "." + extension);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        // Write the decoded file to disk
+        try {
+            byte[] decodedBytes = Base64.getDecoder().decode(decodedFile);
+            FileOutputStream fos = null;
+            if (newFileName != null) {
+                fos = new FileOutputStream(newFileName);
+                fos.write(decodedBytes);
+                fos.close();
+                System.out.println("Decoding completed. File saved as " + newFileName);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Return the newly created file
+        return newFileName;
+    }
+
+    public File decodeFileFromBase64BinaryTmp(byte[] decodedFile, String extension) {
+        File file;
+        try {
+            if (extension != null) {
+                file = File.createTempFile("simplejavautils", "." + extension);
+            } else
+                file = File.createTempFile("simplejavautils", "");
+            try {
+                byte[] decodedBytes = Base64.getDecoder().decode(decodedFile);
+                FileOutputStream fos = new FileOutputStream(file);
+                fos.write(decodedBytes);
+                fos.close();
+                System.out.println("Decoding completed. File saved as " + file.toPath());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        // Return the newly created file
+        file.deleteOnExit();
+        return file;
+    }
+
 }

@@ -8,7 +8,7 @@ import java.util.TreeMap;
  *
  * Create a Custom TreeMap
  * / This Plugin was Created by FrameDev
- * / Package : de.framedev.javautils
+ * / Package : ch.framedev.javautils
  * / ClassName FrameHashMap
  * / Date: 03.04.22
  * / Project: JavaUtils

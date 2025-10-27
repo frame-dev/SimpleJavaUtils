@@ -41,5 +41,4 @@ build/
 
 build.sh
 *.asc
-delete_unnecessary_files.sh
 ._*

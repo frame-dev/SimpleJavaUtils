@@ -1,6 +1,5 @@
 package ch.framedev.simplejavautils;
 
-@SuppressWarnings("unused")
 public class LengthConverter {
 
     private final Length length;

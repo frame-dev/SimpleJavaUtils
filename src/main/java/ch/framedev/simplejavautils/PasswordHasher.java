@@ -10,7 +10,6 @@ import java.util.logging.Level;
 
 import static ch.framedev.simplejavautils.SimpleJavaUtils.logger;
 
-@SuppressWarnings("unused")
 public class PasswordHasher {
 
     private static final String ALGO = "PBKDF2WithHmacSHA1";

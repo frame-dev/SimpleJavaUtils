@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * This Plugin was Created by FrameDev
- * Package : de.framedev.javautils
+ * Package : ch.framedev.simplejavautils
  * ClassName TextUtils
  * Date: 03.05.21
  * Project: JavaUtils
@@ -17,12 +17,14 @@ import java.util.List;
 public class TextUtils extends Converter {
 
     public String replaceAndWithParagraph(String text) {
+        if(text == null) return null;
         if (text.contains("&"))
             text = text.replace('&', '§');
         return text;
     }
 
     public String replaceObject(String text, String format, Object data) {
+        if(text == null) return null;
         if (text.contains(format)) {
             text = text.replace(format, String.valueOf(data));
         }

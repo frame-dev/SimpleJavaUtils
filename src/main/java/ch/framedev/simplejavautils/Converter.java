@@ -7,6 +7,8 @@ package ch.framedev.simplejavautils;
  * / Date: 08.07.21
  * / Project: JavaUtils
  * / Copyrighted by FrameDev
+ * <p>
+ * The Base class for the TextUtils Class
  */
 
 @SuppressWarnings("unused")

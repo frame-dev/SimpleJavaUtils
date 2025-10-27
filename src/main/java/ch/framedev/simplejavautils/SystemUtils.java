@@ -41,7 +41,8 @@ public class SystemUtils {
         VERSION_20,
         VERSION_21,
         VERSION_22,
-        VERSION_23;
+        VERSION_23,
+        VERSION_24;
     }
 
     public static class JavaVersionMapper {
@@ -64,6 +65,7 @@ public class SystemUtils {
             JAVA_VERSION_MAP.put("21", JavaVersion.VERSION_21);
             JAVA_VERSION_MAP.put("22", JavaVersion.VERSION_22);
             JAVA_VERSION_MAP.put("23", JavaVersion.VERSION_23);
+            JAVA_VERSION_MAP.put("24", JavaVersion.VERSION_24);
         }
 
         public static JavaVersion getJavaVersion() {

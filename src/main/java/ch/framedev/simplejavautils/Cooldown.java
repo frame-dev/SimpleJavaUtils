@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  * / This Plugin was Created by FrameDev
- * / Package : de.framedev.javautils
+ * / Package: de.framedev.javautils
  * / ClassName Cooldown
  * / Date: 05.03.22
  * / Project: JavaUtils

@@ -10,29 +10,18 @@ public class LengthConverter {
         this.amount = amount;
     }
 
-    public double toMeters() {
-        return amount * length.getValue();
+    /**
+     * Converts the stored length to another unit.
+     *
+     * @param to The target unit.
+     * @return The converted value.
+     */
+    public double convertTo(Length to) {
+        return (amount * length.getValue()) / to.getValue();
     }
 
-    public double toMiles() {
-        return amount / Length.MILE.getValue();
-    }
-
-    public double toKilometers() {
-        if (length == Length.METER)
-            return amount / Length.KILOMETER.getValue();
-        return amount * length.getValue() / Length.METER.getValue();
-    }
-
-    public double toYards() {
-        return amount * length.getValue() / Length.YARD.getValue();
-    }
-
-    public double toFeet() {
-        return amount * length.getValue() / Length.FOOT.getValue();
-    }
-
-    public double toInches() {
-        return amount * length.getValue() / Length.INCH.getValue();
+    @Override
+    public String toString() {
+        return amount + " " + length.name();
     }
 }

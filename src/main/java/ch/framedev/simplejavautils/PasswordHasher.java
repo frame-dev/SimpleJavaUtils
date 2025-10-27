@@ -6,8 +6,12 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.util.Arrays;
+import java.util.logging.Level;
+
+import static ch.framedev.simplejavautils.SimpleJavaUtils.logger;
 
 public class PasswordHasher {
+
     private static final String ALGO = "PBKDF2WithHmacSHA1";
     private static final byte[] SALT = {
             8, 8, 8, 8, 2,
@@ -20,6 +24,12 @@ public class PasswordHasher {
 
     private SecretKeyFactory mFactory;
 
+    /**
+     * Hashes the given password using the PBKDF2 algorithm.
+     *
+     * @param password The password to be hashed.
+     * @return The hashed password.
+     */
     public byte[] hashPassword(String password) {
         SecretKeyFactory factory = getFactory();
 
@@ -28,12 +38,19 @@ public class PasswordHasher {
                 KeySpec spec = new PBEKeySpec(password.toCharArray(), SALT, ITERATION_COUNT, KEY_LENGTH);
                 return factory.generateSecret(spec).getEncoded();
             } catch (InvalidKeySpecException e) {
-                e.printStackTrace();
+                logger.log(Level.SEVERE,"Error", e);
             }
         }
         return null;
     }
 
+    /**
+     * Verifies the given password against the expected hash result.
+     *
+     * @param password           The password to be verified.
+     * @param expectedHashResult The expected hash result.
+     * @return True if the password is verified, false otherwise.
+     */
     public boolean verifyPassword(String password, byte[] expectedHashResult) {
         byte[] hashedPassword = hashPassword(password);
         if (hashedPassword == null) {
@@ -48,7 +65,7 @@ public class PasswordHasher {
             try {
                 mFactory = SecretKeyFactory.getInstance(ALGO);
             } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
+                logger.log(Level.SEVERE,"Error", e);
             }
         }
         return mFactory;

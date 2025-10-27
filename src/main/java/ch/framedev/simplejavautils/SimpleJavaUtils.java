@@ -17,7 +17,10 @@ import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+@SuppressWarnings("unused")
 public class SimpleJavaUtils {
+
+    public static Logger logger = Logger.getLogger("SimpleJavaUtils");
 
     /**
      * Create a String of a Base64 (encode)
@@ -34,7 +37,7 @@ public class SimpleJavaUtils {
             os.close();
             return Base64.getEncoder().encodeToString(is.toByteArray());
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error while encoding Object to Base64", e);
         }
         return null;
     }
@@ -52,7 +55,7 @@ public class SimpleJavaUtils {
             ObjectInputStream os = new ObjectInputStream(is);
             return (T) os.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error while decoding Object from Base64", e);
         }
         return null;
     }
@@ -71,7 +74,7 @@ public class SimpleJavaUtils {
             writer.flush();
             writer.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error while saving Object to Base64 File", e);
         }
     }
 
@@ -94,7 +97,7 @@ public class SimpleJavaUtils {
             try {
                 if (reader != null) reader.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.log(Level.SEVERE, "Error while closing Reader", e);
             }
         }
         return object;
@@ -112,6 +115,7 @@ public class SimpleJavaUtils {
     /**
      * Print an Error with the Object
      * (System.err.println())
+     *
      * @param object the selected Object for printing an error
      */
     public void error(Object object) {
@@ -153,7 +157,7 @@ public class SimpleJavaUtils {
      *
      * @param value  The Value to Round
      * @param places the Places where the Comma will bee
-     * @return return the Rounden Value of the giving Value to the Places
+     * @return return the Rounded Value of the giving Value to the Places
      */
     public double round(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();
@@ -175,7 +179,9 @@ public class SimpleJavaUtils {
         File file;
         if (location != null) {
             file = new File(location, fileNameWithExtensions);
-            if (file.getParentFile() != null && !file.getParentFile().exists()) file.getParentFile().mkdirs();
+            if (file.getParentFile() != null && !file.getParentFile().exists()) if(!file.getParentFile().mkdirs()) {
+                throw new IllegalStateException("Could not create directory : " + file.getParentFile().getAbsolutePath());
+            }
         } else {
             file = new File(fileNameWithExtensions);
         }
@@ -191,25 +197,26 @@ public class SimpleJavaUtils {
                 fout.write(data, 0, count);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error while Downloading File", e);
         } finally {
             try {
                 if (in != null) {
                     in.close();
                 }
             } catch (final IOException e) {
-                e.printStackTrace();
+                logger.log(Level.SEVERE, "Error while closing InputStream", e);
             }
             try {
                 if (fout != null) {
                     fout.close();
                 }
             } catch (final IOException e) {
-                e.printStackTrace();
+                logger.log(Level.SEVERE, "Error while closing FileOutputStream", e);
             }
         }
         if (new File(newLocation, fileNameWithExtensions).getParentFile() != null && !new File(newLocation, fileNameWithExtensions).getParentFile().exists())
-            new File(newLocation, fileNameWithExtensions).getParentFile().mkdirs();
+            if(!new File(newLocation, fileNameWithExtensions).getParentFile().mkdirs())
+                throw new IllegalStateException("Could not create directory : " + new File(newLocation, fileNameWithExtensions).getParentFile().getAbsolutePath());
         if (!file.renameTo(new File(newLocation, fileNameWithExtensions))) {
             Logger.getLogger("SimpleJavaUtils").log(Level.SEVERE, "File cannot be Renamed or Moved!");
         }
@@ -226,7 +233,8 @@ public class SimpleJavaUtils {
         File file;
         if (location != null) {
             file = new File(location, fileNameWithExtensions);
-            if (file.getParentFile() != null && !file.getParentFile().exists()) file.getParentFile().mkdirs();
+            if (file.getParentFile() != null && !file.getParentFile().exists()) if(!file.getParentFile().mkdirs())
+                throw new IllegalStateException("Could not create directory : " + file.getParentFile().getAbsolutePath());
         } else {
             file = new File(fileNameWithExtensions);
         }
@@ -242,21 +250,21 @@ public class SimpleJavaUtils {
                 fout.write(data, 0, count);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error while Downloading File", e);
         } finally {
             try {
                 if (in != null) {
                     in.close();
                 }
             } catch (final IOException e) {
-                e.printStackTrace();
+                logger.log(Level.SEVERE, "Error while closing InputStream", e);
             }
             try {
                 if (fout != null) {
                     fout.close();
                 }
             } catch (final IOException e) {
-                e.printStackTrace();
+                logger.log(Level.SEVERE, "Error while closing FileOutputStream", e);
             }
         }
     }
@@ -268,7 +276,7 @@ public class SimpleJavaUtils {
      */
     public String getTempDir() {
         String os = System.getProperty("os.name").toLowerCase();
-        String tempDir = "";
+        String tempDir;
         if (os.contains("mac")) {
             tempDir = System.getProperty("java.io.tmpdir") + "/";
         } else if (os.contains("windows")) {
@@ -286,7 +294,7 @@ public class SimpleJavaUtils {
      */
     public String getUserHome() {
         String os = System.getProperty("os.name").toLowerCase();
-        String userDir = "";
+        String userDir;
         if (os.contains("mac")) {
             userDir = System.getProperty("user.home");
         } else if (os.contains("windows")) {
@@ -375,17 +383,23 @@ public class SimpleJavaUtils {
             // Return the Temp File
             return f;
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error while creating Temp File", e);
             return null;
         } finally {
             if (out != null) try {
                 out.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.log(Level.SEVERE, "Error while closing FileOutputStream", e);
             }
         }
     }
 
+    /**
+     * Get a File from the Resource Folder
+     *
+     * @param file the File to get from the Resource Folder
+     * @return return the File from the Resource Folder
+     */
     public File getFromResourceFile(String file) {
         InputStream resource = this.getClass().getClassLoader().getResourceAsStream(file);
         if (resource == null) {
@@ -395,6 +409,13 @@ public class SimpleJavaUtils {
         }
     }
 
+    /**
+     * Get a File from the Resource Folder
+     *
+     * @param file    the File to get from the Resource Folder
+     * @param class_  the Class where the Resource is located
+     * @return return the File from the Resource Folder
+     */
     public File getFromResourceFile(String file, Class<?> class_) {
         InputStream resource = class_.getClassLoader().getResourceAsStream(file);
         if (resource == null) {
@@ -407,7 +428,7 @@ public class SimpleJavaUtils {
     /**
      * Check if a File is existing
      *
-     * @param fileName the FileName to check if it is exists or not
+     * @param fileName the FileName to check if it is existing or not
      * @return return a boolean if exists or not
      */
     public boolean existsFile(String fileName) {
@@ -457,9 +478,8 @@ public class SimpleJavaUtils {
     public File zipDirectory(File directory, File outPut) throws IOException {
         FileOutputStream fos = new FileOutputStream(outPut);
         ZipOutputStream zipOut = new ZipOutputStream(fos);
-        File fileToZip = directory;
 
-        zipFile(fileToZip, fileToZip.getName(), zipOut);
+        zipFile(directory, directory.getName(), zipOut);
         zipOut.close();
         fos.close();
         return outPut;
@@ -494,6 +514,13 @@ public class SimpleJavaUtils {
         return zipFile;
     }
 
+    /**
+     * Zips a file or directory into a ZipOutputStream.
+     * @param fileToZip the file or directory to zip
+     * @param fileName the name of the file in the zip archive
+     * @param zipOut the ZipOutputStream to write the zip entry to
+     * @throws IOException if an I/O error occurs while zipping the file
+     */
     private void zipFile(File fileToZip, String fileName, ZipOutputStream zipOut) throws IOException {
         if (fileToZip.isHidden()) {
             return;
@@ -507,6 +534,7 @@ public class SimpleJavaUtils {
                 zipOut.closeEntry();
             }
             File[] children = fileToZip.listFiles();
+            if (children == null) throw new IOException("Error while zipping File : " + fileToZip.getName());
             for (File childFile : children) {
                 zipFile(childFile, fileName + "/" + childFile.getName(), zipOut);
             }
@@ -556,7 +584,12 @@ public class SimpleJavaUtils {
         return isOnline(server, port, 2500);
     }
 
-    public Logger getLogger() {
+    /**
+     * Get the Logger for SimpleJavaUtils
+     *
+     * @return return the Logger for SimpleJavaUtils
+     */
+    protected Logger getLogger() {
         return createEmptyLogger("SimpleJavaUtils", true);
     }
 
@@ -580,6 +613,7 @@ public class SimpleJavaUtils {
             throw new RuntimeException(e);
         }
     }
+
     /**
      * Retrieves the file path of the application based on the operating system.
      * If the operating system is Windows, the method returns the file path with a backslash as the separator.
@@ -601,24 +635,33 @@ public class SimpleJavaUtils {
         }
     }
 
+    /**
+     * Encodes a file to a Base64 binary array.
+     *
+     * @param file the file to encode
+     * @return the Base64 encoded byte array of the file, or null if an error occurs
+     */
     public byte[] encodeFileToBase64BinaryArray(File file) {
-        byte[] encodedfile = null;
-        try {
-            byte[] bytes;
-            try (FileInputStream fileInputStreamReader = new FileInputStream(file)) {
-                bytes = new byte[(int) file.length()];
-                fileInputStreamReader.read(bytes);
-                encodedfile = Base64.getEncoder().encode(bytes);
-            }
+        try (FileInputStream fileInputStreamReader = new FileInputStream(file)) {
+            byte[] bytes = new byte[(int) file.length()];
+            //noinspection ResultOfMethodCallIgnored
+            fileInputStreamReader.read(bytes);
+            return Base64.getEncoder().encode(bytes);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error while encoding File to Base64", e);
+            return null;
         }
-        if (encodedfile != null) {
-            return encodedfile;
-        }
-        return null;
     }
 
+    /**
+     * Decodes a Base64 binary file and saves it to the specified location with the given file name and extension.
+     *
+     * @param decodedFile the Base64 encoded byte array of the file
+     * @param extension   the file extension (e.g., "txt", "jpg"), can be null
+     * @param fileName    the name of the file to be created
+     * @param location    the directory where the file will be saved
+     * @return the newly created file from the decoded Base64 data
+     */
     public File decodeFileFromBase64Binary(byte[] decodedFile, String extension, String fileName, String location) {
 
         // Construct the file path
@@ -630,13 +673,13 @@ public class SimpleJavaUtils {
                 newFileName = File.createTempFile(location, fileName + "." + extension);
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.log(Level.SEVERE, "Error while creating new File", ex);
         }
 
         // Write the decoded file to disk
         try {
             byte[] decodedBytes = Base64.getDecoder().decode(decodedFile);
-            FileOutputStream fos = null;
+            FileOutputStream fos;
             if (newFileName != null) {
                 fos = new FileOutputStream(newFileName);
                 fos.write(decodedBytes);
@@ -644,13 +687,20 @@ public class SimpleJavaUtils {
                 System.out.println("Decoding completed. File saved as " + newFileName);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error while decoding File from Base64", e);
         }
 
         // Return the newly created file
         return newFileName;
     }
 
+    /**
+     * Decodes a Base64 binary file and saves it as a temporary file with the specified extension.
+     *
+     * @param decodedFile the Base64 encoded byte array of the file
+     * @param extension   the file extension (e.g., "txt", "jpg"), can be null
+     * @return the temporary file created from the decoded Base64 data
+     */
     public File decodeFileFromBase64BinaryTmp(byte[] decodedFile, String extension) {
         File file;
         try {
@@ -665,7 +715,7 @@ public class SimpleJavaUtils {
                 fos.close();
                 System.out.println("Decoding completed. File saved as " + file.toPath());
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.log(Level.SEVERE, "Error while decoding File from Base64", e);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -676,4 +726,138 @@ public class SimpleJavaUtils {
         return file;
     }
 
+    /**
+     * Capitalizes the first letter of the given string.
+     *
+     * @param str the string to capitalize
+     * @return the string with the first letter capitalized, or the original string if it is null or empty
+     */
+    @Deprecated
+    public String capitalizeFirstLetter(String str) {
+        if (str == null || str.isEmpty()) {
+            return str;
+        }
+        return str.substring(0, 1).toUpperCase() + str.substring(1);
+    }
+
+    /**
+     * Capitalizes the first letter of the given string.
+     *
+     * @param str the string to capitalize
+     * @return the string with the first letter capitalized, or the original string if it is null or empty
+     */
+    public String capitalize(String str) {
+        if (str == null || str.isEmpty()) {
+            return str;
+        }
+
+        if(str.contains(" ")) {
+            String[] parts = str.split(" ");
+            StringBuilder capitalizedString = new StringBuilder();
+            for (String part : parts) {
+                if (!part.isEmpty()) {
+                    capitalizedString.append(part.substring(0, 1).toUpperCase())
+                            .append(part.substring(1)).append(" ");
+                } else {
+                    capitalizedString.append(" ");
+                }
+            }
+            return capitalizedString.toString();
+        }
+
+        return str.substring(0, 1).toUpperCase() + str.substring(1);
+    }
+
+    /**
+     * Uncapitalizes the first letter of the given string.
+     *
+     * @param str the string to uncapitalize
+     * @return the string with the first letter uncapitalized, or the original string if it is null or empty
+     */
+    public String uncapitalize(String str) {
+        if (str == null || str.isEmpty()) {
+            return str;
+        }
+        return str.substring(0, 1).toLowerCase() + str.substring(1);
+    }
+
+    /**
+     * Converts a string to camel case, where the first letter of the first word is lowercase and the first letter of each subsequent word is capitalized.
+     *
+     * @param str the string to convert
+     * @return the string in camel case, or the original string if it is null or empty
+     */
+    public String toCamelCase(String str) {
+        if (str == null || str.isEmpty()) {
+            return str;
+        }
+        String[] parts = str.split(" ");
+        StringBuilder camelCaseString = new StringBuilder();
+        for (String part : parts) {
+            camelCaseString.append(capitalize(part));
+        }
+        return camelCaseString.toString();
+    }
+
+    /**
+     * Converts a string to Pascal case, where the first letter of each word is capitalized and no spaces are present.
+     *
+     * @param str the string to convert
+     * @return the string in Pascal case, or the original string if it is null or empty
+     */
+    public String toPascalCase(String str) {
+        if (str == null || str.isEmpty()) {
+            return str;
+        }
+        String[] parts = str.split(" ");
+        StringBuilder pascalCaseString = new StringBuilder();
+        for (String part : parts) {
+            pascalCaseString.append(capitalize(part));
+        }
+        return pascalCaseString.toString();
+    }
+
+    /**
+     * Converts a string to kebab case, where words are separated by hyphens and all letters are lowercase.
+     *
+     * @param str the string to convert
+     * @return the string in kebab case, or the original string if it is null or empty
+     */
+    public String toSnakeCase(String str) {
+        if (str == null || str.isEmpty()) {
+            return str;
+        }
+        return str.replaceAll("([a-z])([A-Z])", "$1_$2").toLowerCase();
+    }
+
+    /**
+     * Converts a string to kebab case, where words are separated by hyphens and all letters are lowercase.
+     *
+     * @param str the string to convert
+     * @return the string in kebab case, or the original string if it is null or empty
+     */
+    public String toKebabCase(String str) {
+        if (str == null || str.isEmpty()) {
+            return str;
+        }
+        return str.replaceAll("([a-z])([A-Z])", "$1-$2").toLowerCase();
+    }
+
+    /**
+     * Converts a string to title case, where the first letter of each word is capitalized.
+     *
+     * @param str the string to convert
+     * @return the string in title case, or the original string if it is null or empty
+     */
+    public String toTitleCase(String str) {
+        if (str == null || str.isEmpty()) {
+            return str;
+        }
+        String[] parts = str.split(" ");
+        StringBuilder titleCaseString = new StringBuilder();
+        for (String part : parts) {
+            titleCaseString.append(capitalize(part)).append(" ");
+        }
+        return titleCaseString.toString().trim();
+    }
 }

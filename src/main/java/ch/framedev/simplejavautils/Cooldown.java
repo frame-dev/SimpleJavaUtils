@@ -4,20 +4,18 @@ import java.io.Serializable;
 
 /**
  * / This Plugin was Created by FrameDev
- * / Package: de.framedev.javautils
+ * / Package: ch.framedev.simplejavautils
  * / ClassName Cooldown
  * / Date: 05.03.22
  * / Project: JavaUtils
  * / Copyrighted by FrameDev
  */
 
-@SuppressWarnings("unused")
 public class Cooldown implements Serializable {
 
     private final int id;
     private final int seconds;
     private long secondsLeft;
-    private long milliSecondsLeft;
     private long milliSeconds;
     private final long actualTime;
 
@@ -85,7 +83,6 @@ public class Cooldown implements Serializable {
                 "id=" + id +
                 ", seconds=" + seconds +
                 ", secondsLeft=" + secondsLeft +
-                ", milliSecondsLeft=" + milliSecondsLeft +
                 ", milliSeconds=" + milliSeconds +
                 ", actualTime=" + actualTime +
                 '}';

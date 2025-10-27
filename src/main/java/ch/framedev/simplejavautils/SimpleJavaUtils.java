@@ -87,18 +87,14 @@ public class SimpleJavaUtils {
      */
     public <T> T getObjectFromBase64File(File file) {
         T object = null;
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new FileReader(file));
-            object = objectFromBase64(reader.readLine());
-        } catch (Exception ignored) {
-
-        } finally {
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             try {
-                if (reader != null) reader.close();
-            } catch (IOException e) {
-                logger.log(Level.SEVERE, "Error while closing Reader", e);
+                object = objectFromBase64(reader.readLine());
+            } catch (Exception ignored) {
+
             }
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, "Error while closing Reader", e);
         }
         return object;
     }

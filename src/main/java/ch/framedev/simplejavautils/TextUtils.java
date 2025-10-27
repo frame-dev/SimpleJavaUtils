@@ -121,10 +121,10 @@ public class TextUtils extends Converter {
             if (!s.contains("[") || !s.contains("]")) {
                 System.out.print("| " + s);
             } else {
-                String updated = s;
+                StringBuilder updated = new StringBuilder(s);
                 int updatedSpaces = spaces / 2;
                 for (int i = 0; i < updatedSpaces; i++)
-                    updated = " " + updated;
+                    updated.insert(0, " ");
                 System.out.print("| " + updated);
                 spaces = updatedSpaces;
             }
@@ -171,16 +171,16 @@ public class TextUtils extends Converter {
             int spaces = lastLength - s.length();
             if (!s.contains("[") || !s.contains("]")) {
                 sb.append("| ").append(s);
-                int addedSpaces = 0;
+                @SuppressWarnings("unused") int addedSpaces = 0;
                 while (spaces-- > 0) {
                     sb.append(" ");
                     addedSpaces++;
                 }
             } else {
-                String updated = s;
+                StringBuilder updated = new StringBuilder(s);
                 int updatedSpaces = spaces / 2;
                 for (int i = 0; i < updatedSpaces; i++) {
-                    updated = " " + updated;
+                    updated.insert(0, " ");
                 }
                 sb.append("| ").append(updated);
                 spaces = lastLength - s.length() - updatedSpaces;

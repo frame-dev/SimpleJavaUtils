@@ -12,6 +12,7 @@ import java.io.StringWriter;
  * / Copyrighted by FrameDev
  */
 
+@SuppressWarnings("unused")
 public class SystemMemory {
 
     // can be white-box mocked for testing

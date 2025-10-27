@@ -2,14 +2,13 @@ package ch.framedev.simplejavautils;
 
 /**
  * / This Plugin was Created by FrameDev
- * / Package : de.framedev.javautils
+ * / Package : ch.framedev.simplejavautils
  * / ClassName CooldownMilliSeconds
  * / Date: 05.03.22
  * / Project: JavaUtils
  * / Copyrighted by FrameDev
  */
 
-@SuppressWarnings("unused")
 public class CooldownMilliSeconds extends Cooldown {
     private final int id;
     private final long milliSecs;

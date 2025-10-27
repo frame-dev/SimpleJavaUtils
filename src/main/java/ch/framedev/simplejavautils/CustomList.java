@@ -1,6 +1,8 @@
 // java
 package ch.framedev.simplejavautils;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -36,6 +38,10 @@ public class CustomList<T> implements Iterable<T>, Serializable {
         T[] newItems = (T[]) new Object[newCapacity];
         System.arraycopy(items, 0, newItems, 0, size);
         items = newItems;
+    }
+
+    public int getCapacity() {
+        return items.length;
     }
 
     public void add(T item) {
@@ -143,7 +149,7 @@ public class CustomList<T> implements Iterable<T>, Serializable {
     }
 
     @Override
-    public Iterator<T> iterator() {
+    public @NotNull Iterator<T> iterator() {
         return new Itr();
     }
 

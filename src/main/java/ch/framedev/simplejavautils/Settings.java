@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Properties;
 
+@SuppressWarnings("unused")
 public class Settings {
 
     private Properties properties;

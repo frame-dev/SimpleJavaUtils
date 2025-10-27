@@ -22,6 +22,7 @@ import java.util.Map;
  * / Copyrighted by FrameDev
  */
 
+@SuppressWarnings({"CallToPrintStackTrace", "unused"})
 public class SystemUtils {
 
     public enum JavaVersion {
@@ -42,7 +43,7 @@ public class SystemUtils {
         VERSION_21,
         VERSION_22,
         VERSION_23,
-        VERSION_24;
+        VERSION_24
     }
 
     public static class JavaVersionMapper {
@@ -86,7 +87,7 @@ public class SystemUtils {
 
 
     public enum OSType {
-        WINDOWS, MACOS, LINUX, OTHER;
+        WINDOWS, MACOS, LINUX, OTHER
     }
 
     /**
@@ -123,6 +124,7 @@ public class SystemUtils {
         return ManagementFactory.getOperatingSystemMXBean().getAvailableProcessors();
     }
 
+    @SuppressWarnings("UnnecessaryModifier")
     public static enum DiskSizeType {
         MB(1000 * 1000),
         GB(1000 * 1000 * 1000),
@@ -193,7 +195,7 @@ public class SystemUtils {
                     totalSpace += store.getTotalSpace() / gb;
                 }
             } catch (IOException e) {
-                System.out.println("error querying space: " + e.toString());
+                System.out.println("error querying space: " + e);
             }
         }
         return totalSpace;
@@ -211,7 +213,7 @@ public class SystemUtils {
                 totalSpace = store.getTotalSpace() / gb;
             }
         } catch (IOException e) {
-            System.out.println("error querying space: " + e.toString());
+            System.out.println("error querying space: " + e);
         }
         return totalSpace;
     }
@@ -219,7 +221,7 @@ public class SystemUtils {
     public double getUsedDiskSpace(File file) {
         long gb = DiskSizeType.GB.getSize();
         long usedSpace = 0;
-        long totalSpace = 0;
+        long totalSpace;
         try {
             if (isDrive(file)) {
                 FileStore store = Files.getFileStore(file.toPath());
@@ -231,7 +233,7 @@ public class SystemUtils {
                 usedSpace = totalSpace - (store.getUsableSpace() / gb);
             }
         } catch (IOException e) {
-            System.out.println("error querying space: " + e.toString());
+            System.out.println("error querying space: " + e);
         }
         return usedSpace;
     }
@@ -252,7 +254,7 @@ public class SystemUtils {
                     usedSpace += totalSpace - (store.getUsableSpace() / gb);
                 }
             } catch (IOException e) {
-                System.out.println("error querying space: " + e.toString());
+                System.out.println("error querying space: " + e);
             }
         }
         return usedSpace;

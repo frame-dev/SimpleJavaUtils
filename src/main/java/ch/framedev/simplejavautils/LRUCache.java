@@ -10,6 +10,10 @@ public class LRUCache<K, V> {
     private final long defaultTtlMillis;
     private final Map<K, CacheEntry<V>> map;
 
+    public LRUCache(int maxSize) {
+        this(maxSize, 0);
+    }
+
     public LRUCache(int maxSize, long defaultTtlMillis) {
         this.maxSize = Math.max(1, maxSize);
         this.defaultTtlMillis = defaultTtlMillis;

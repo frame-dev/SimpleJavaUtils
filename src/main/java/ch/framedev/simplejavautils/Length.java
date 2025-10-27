@@ -1,5 +1,6 @@
 package ch.framedev.simplejavautils;
 
+@SuppressWarnings("unused")
 public enum Length {
 
     MILLIMETER(0.001),

@@ -8,7 +8,7 @@ package ch.framedev.simplejavautils;
  * @version  1.0
  * @since    2021-09-26
  */
-public enum ConsoleColors {
+public enum ConsoleColor {
     /**
      * Color end string, color reset.
      */
@@ -100,7 +100,7 @@ public enum ConsoleColors {
 
     private final String code;
 
-    ConsoleColors(String code) {
+    ConsoleColor(String code) {
         this.code = code;
     }
 

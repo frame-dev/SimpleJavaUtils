@@ -652,12 +652,11 @@ public class ReflectionUtils {
     }
 
     /**
-     * Checks if the Method is a Void Method
-     *
-     * @param className
-     * @param object
-     * @param methodName
-     * @return
+     * Checks if the Method is Void
+     * @param className the ClassName as example [de.framedev.javaproject.main.Main]
+     * @param object the Object for the Method
+     * @param methodName the Method name to check
+     * @return return true if the Method is Void
      */
     public boolean isVoidMethod(String className, Object object, String methodName) {
         Class<?> cls = null;

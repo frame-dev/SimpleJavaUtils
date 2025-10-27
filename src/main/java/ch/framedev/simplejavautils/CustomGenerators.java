@@ -40,10 +40,27 @@ public class CustomGenerators {
         private int min;
         private int max;
 
+        private static final int DEFAULT_MIN = 120;
+        private static final int DEFAULT_MAX = 420;
+
         /**
-         * Initializes a new instance of the {@code IntRandomNumberGenerator} class.
+         * Initializes a new instance of the {@code IntRandomNumberGenerator} class with defaults.
          */
         public IntRandomNumberGenerator() {
+            this.min = DEFAULT_MIN;
+            this.max = DEFAULT_MAX;
+        }
+
+        /**
+         * Initializes a new random number generator that generates random integers within the specified range.
+         *
+         * @param min the minimum value inclusive
+         * @param max the maximum value inclusive
+         */
+        public IntRandomNumberGenerator(int min, int max) {
+            this.min = min;
+            this.max = max;
+            this.randomIterator = new Random().ints(min, max + 1).iterator();
         }
 
         /**
@@ -87,22 +104,14 @@ public class CustomGenerators {
         }
 
         /**
-         * Initializes a new random number generator that generates random integers within the specified range.
-         *
-         * @param min the minimum value inclusive
-         * @param max the maximum value inclusive
-         */
-        public IntRandomNumberGenerator(int min, int max) {
-            randomIterator = new Random().ints(min, max + 1).iterator();
-        }
-
-        /**
          * Generates a random integer within the specified range.
          *
          * @return a random integer within the specified range
          */
         public int nextInt() {
-            if (randomIterator == null) randomIterator = new Random().ints(min, max + 1).iterator();
+            if (randomIterator == null) {
+                randomIterator = new Random().ints(min, max + 1).iterator();
+            }
             return randomIterator.nextInt();
         }
     }
@@ -117,11 +126,26 @@ public class CustomGenerators {
         private double min;
         private double max;
 
-
         /**
          * Initializes a new instance of the {@code DoubleRandomNumberGenerator} class.
          */
         public DoubleRandomNumberGenerator() {
+            // keep defaults 0.0 .. 1.0 unless changed via setMin/setMax
+            this.min = 0.0;
+            this.max = 1.0;
+        }
+
+        /**
+         * Initializes a new random number generator that generates random doubles within the specified range.
+         *
+         * @param min the minimum value inclusive
+         * @param max the maximum value inclusive
+         */
+        public DoubleRandomNumberGenerator(double min, double max) {
+            this.min = min;
+            this.max = max;
+            // use Math.nextUp(max) so that the upper bound can be effectively inclusive
+            this.randomIterator = new Random().doubles(min, Math.nextUp(max)).iterator();
         }
 
         /**
@@ -165,22 +189,14 @@ public class CustomGenerators {
         }
 
         /**
-         * Initializes a new random number generator that generates random doubles within the specified range.
-         *
-         * @param min the minimum value inclusive
-         * @param max the maximum value inclusive
-         */
-        public DoubleRandomNumberGenerator(double min, double max) {
-            randomIterator = new Random().doubles(min, max + 1).iterator();
-        }
-
-        /**
          * Generates a random double within the specified range.
          *
          * @return a random double within the specified range
          */
         public double nextDouble() {
-            if (randomIterator == null) randomIterator = new Random().doubles(min, max + 1).iterator();
+            if (randomIterator == null) {
+                randomIterator = new Random().doubles(min, Math.nextUp(max)).iterator();
+            }
             return randomIterator.nextDouble();
         }
     }

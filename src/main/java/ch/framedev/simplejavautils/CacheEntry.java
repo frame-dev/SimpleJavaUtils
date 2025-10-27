@@ -1,8 +1,5 @@
 package ch.framedev.simplejavautils;
 
-/**
- * @param expiryTime epoch millis; Long.MAX_VALUE = never expire
- */
 public class CacheEntry<V> {
 
     private final V value;
